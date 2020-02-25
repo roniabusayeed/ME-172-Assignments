@@ -1,0 +1,93 @@
+\documentclass[12pt, letterpaper]{report}
+\usepackage[utf8]{inputenc}
+
+\title{ME-172\\Computer Programming Language Sessional}
+\author{Abu Sayeed Roni, ID: 1710065\\Dept: ME, Section: B-2}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Problem 1}
+{\large Write a Progam to find the Area of a Circle. [NOTE: radius should be scanned from the keyboard]}
+
+\subsection*{Solution:}
+
+\begin{verbatim}
+    /**
+     * Calculates the area of a circle
+     */
+
+    #include <stdio.h>
+    #include <math.h>
+
+
+    int main(void)
+    {
+        const float pi = 3.1416;
+        float radius, area;
+
+        // Take user input for radius.
+        printf("Enter radius: ");
+        scanf("%f", &radius);
+
+        // Calculate area.
+        area = pi * pow(radius, 2);
+
+        // Print output.
+        printf("Area: %.2f\n", area);
+    }
+\end{verbatim}
+
+\section*{Problem 2}
+{\large Write a Progam to compute average of four user given numbers (numbers can be of integer or floating types)}
+
+\subsection*{Solution:}
+\begin{verbatim}
+    /**
+     * Computes average of four user given numbers.
+     */ 
+
+    #include <stdio.h>
+
+
+    int main(void)
+    {
+        // Allocating memory to store 4 numbers.
+        const int count = 4;
+        float numbers[count];
+
+        // Prompt user for input
+        printf("Enter four numbers: \n");
+        for (int i = 0; i < count; i++)
+        {
+            scanf("%f", numbers + i);
+        }
+
+        // Calculate average
+        float sum = 0;
+        for (int i = 0; i < count; i++)
+        {
+            sum += numbers[i];
+        }
+        float avg = sum / count;
+
+        // Print output
+        printf("Average of ");
+        for (int i = 0; i < count; i++)
+        {
+            if (i == count -1)
+            {
+                printf(", and ");
+            }
+            else if (i)
+            {
+                printf(", ");
+            }
+            printf("%.2f ", numbers[i]);
+        }
+        printf(" is: %.2f\n", avg);
+    }
+
+\end{verbatim}
+\end{document}
