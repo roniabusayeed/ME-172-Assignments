@@ -12,12 +12,12 @@ int main(void)
     float radius, area;
 
     // Take user input for radius.
-    printf("Enter radius: ");
+    printf("Enter radius (in cm): ");
     scanf("%f", &radius);
 
     // Calculate area.
     area = pi * pow(radius, 2);
 
     // Print output.
-    printf("Area: %.2f\n", area);
+    printf("Area: %.2f sq. cm.\n", area);
 }

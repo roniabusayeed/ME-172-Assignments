@@ -1,9 +1,10 @@
 \documentclass[12pt, letterpaper]{report}
 \usepackage[utf8]{inputenc}
+\usepackage{amsmath}
 
-\title{ME-172\\Computer Programming Language Sessional}
+\title{ME-172\\Computer Programming Language Sessional\\Assignment No. 1}
 \author{Abu Sayeed Roni, ID: 1710065\\Dept: ME, Section: B-2}
-\date{\today}
+\date{February 24, 2020}
 
 \begin{document}
 \maketitle
@@ -12,7 +13,11 @@
 {\large Write a Progam to find the Area of a Circle. [NOTE: radius should be scanned from the keyboard]}
 
 \subsection*{Solution:}
-
+Formula used: 
+\begin{displaymath}
+A = \pi r^2
+\end{displaymath}
+Value of $\pi$ used in the following code is rounded to four decimal places. For our purposes this should do just fine.
 \begin{verbatim}
     /**
      * Calculates the area of a circle
@@ -38,11 +43,30 @@
         printf("Area: %.2f\n", area);
     }
 \end{verbatim}
+Saving the file with name \texttt{circle.c}. Then Compiling the source file with the following command:
+
+\begin{verbatim}
+$ clang -o circle circle.c -lm
+\end{verbatim}
+An executable binary file with name \texttt{circle} will be created if everything goes right.
+\subsubsection*{Output}
+Running the program with the following command:
+\begin{verbatim}
+$ ./circle
+
+Enter radius: 3.5
+Area: 38.48
+\end{verbatim}
 
 \section*{Problem 2}
 {\large Write a Progam to compute average of four user given numbers (numbers can be of integer or floating types)}
 
 \subsection*{Solution:}
+Formula used:
+\begin{displaymath}
+\bar{x} = \dfrac{\sum\limits_{i=1}\limits^n x_i}{n}
+\end{displaymath}
+$n$, in our case, just happens to be $4$, though it could've been anything (any resonable positive integer) and we could still make the following code work just by setting \texttt{count} to whatever $n$ would've been. We have this flexibility because of the better design decision taken instead of just \emph{hard-coding} four separate variables.
 \begin{verbatim}
     /**
      * Computes average of four user given numbers.
@@ -88,6 +112,22 @@
         }
         printf(" is: %.2f\n", avg);
     }
-
 \end{verbatim}
+Saving the file with name \texttt{average.c}. Then compiling the source file with the following command:
+\begin{verbatim}
+$ clang -o average average.c
+\end{verbatim}
+An executable binary file with name \texttt{average} will be created if everything goes right.
+
+\subsubsection*{Output}
+Running the program with the following command:
+\begin{verbatim}
+$ ./average
+Enter four numbers:
+1 2 3 4
+Average of 1.00 , 2.00 , 3.00 , and 4.00  is: 2.50
+\end{verbatim}
+
+\section*{}
+NOTE: All the programs are written in \emph{Linux} environment. The executable binary files don't have an extension like .exe, .dmg, or .app beacuse in Linux whether a program is executable or not is determined by the permissions on the file, not the extension. And LLVM's \emph{Clang} is used for the compilation of above source files which just happens to be my favourite.
 \end{document}
