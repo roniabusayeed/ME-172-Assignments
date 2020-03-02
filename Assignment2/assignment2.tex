@@ -1,0 +1,162 @@
+\documentclass[12pt, letterpaper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\title{ME-172\\Computer Programming Language Sessional\\Assignment No. 2}
+\author{Abu Sayeed Roni, ID: 1710065\\Dept: ME, Section: B-2}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Problem 1}
+{\large Write a C program to find the smallest of 3 integers taken
+as input using nested if-else statement.}
+
+\subsection*{Solution:}
+The code below could be written a little more succintly if we're allowed to use logical operators
+and if-else-if chaining. Or if the problem would've asked to find the smallest of, say, 100 integers,
+we would've definitely used a loop to iterate over the array of integers keeping track of the current smallest
+integer. But as the problem states that we are to use \emph{nested if-else} statement, here is the code.
+\begin{verbatim}
+    /**
+     * Finds the smallest of three integers.
+     */
+
+
+    #include <stdio.h>
+
+
+    int main(void)
+    {
+        // Take user input for three integers.
+        int a, b, c;
+        printf("%s\n", "Enter three integers:");
+        scanf("%i %i %i", &a, &b, &c);
+
+        int smallest;
+
+        // Compare three integers and find the smallest one.
+        if (a < b)
+        {
+            if (a < c)
+            {
+                smallest = a;
+            }
+            else
+            {
+                smallest = c;
+            }
+        }
+        else
+        {
+            if (b < c)
+            {
+                smallest = b;
+            }
+            else
+            {
+                smallest = c;
+            }
+        }
+        
+        // Show output.
+        printf("Smallest integer: %i\n", smallest);
+    }
+
+\end{verbatim}
+Saving the file with name \texttt{smallest.c}. Then Compiling the source file with the following command:
+
+\begin{verbatim}
+$ clang -o smallest smallest.c
+\end{verbatim}
+An executable binary file with name \texttt{smallest} will be created if everything goes right.
+\subsubsection*{Output}
+Running the executable with the following command:
+\begin{verbatim}
+$ ./smallest
+Enter three integers:
+6
+3
+9
+Smallest integer: 3
+\end{verbatim}
+
+\section*{Problem 2}
+{\large Write a C program to find that whether a year is leap or
+not.}
+
+\subsection*{Solution:}
+A leap year is a year, occurring once every four years, which has 366 days including 29 February as an intercalary day.
+But then there is a catch: it cannot be a multiple of 100 because of some special rules that apply every 100 years.
+But if the year is a multiple of 400, it is a leap year.
+
+\begin{verbatim}
+    /**
+     * Checks if a given year is a leap year or not.
+     */
+
+
+    #include <stdio.h>
+    #include <stdbool.h>
+
+
+    int main(void)
+    {
+        // Take input from user for a year.
+        int year;
+        printf("%s", "Enter a year: ");
+        scanf("%i", &year);
+
+        // Check if the year is a leap year or not.
+        bool leapYear;
+        if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))  
+        {
+            leapYear = true;
+        }
+        else 
+        {
+            leapYear = false;
+        }
+
+        // Show output.
+        if (leapYear)
+        {
+            printf("%i is a leap year.\n", year);
+        }
+        else
+        {
+            printf("%i is not a leap year.\n", year);
+        }
+    }
+
+\end{verbatim}
+Saving the file with name \texttt{leapyear.c}. Then compiling the source file with the following command:
+\begin{verbatim}
+$ clang -o leapyear leapyear.c
+\end{verbatim}
+An executable binary file with name \texttt{leapyear} will be created if everything goes right.
+
+\subsubsection*{Output}
+Running the executable in the following manner a few times:
+\begin{verbatim}
+$ ./leapyear
+Enter a year: 2019
+2019 is not a leap year.
+
+$ ./leapyear
+Enter a year: 2020
+2020 is a leap year.
+
+$ ./leapyear
+Enter a year: 2100
+2100 is not a leap year.
+
+$ ./leapyear
+Enter a year: 2000
+2000 is a leap year.
+\end{verbatim}
+
+\section*{}
+NOTE: All the programs are written in \emph{Linux} environment. The executable binary files don't have an extension like .exe, .dmg, or .app beacuse in Linux whether a program is executable or not is determined by the permissions on the file, not the extension. And LLVM's \emph{Clang} is used for the compilation of above source files.
+\end{document}
