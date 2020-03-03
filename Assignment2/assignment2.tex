@@ -1,10 +1,11 @@
 \documentclass[12pt, letterpaper]{report}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
+\usepackage{amssymb}
 
 \title{ME-172\\Computer Programming Language Sessional\\Assignment No. 2}
 \author{Abu Sayeed Roni, ID: 1710065\\Dept: ME, Section: B-2}
-\date{\today}
+\date{March 2, 2020}
 
 \begin{document}
 \maketitle
@@ -83,79 +84,114 @@ Smallest integer: 3
 \end{verbatim}
 
 \section*{Problem 2}
-{\large Write a C program to find that whether a year is leap or
-not.}
+{\large Write a C program to find the roots of a quadratic equation $ax^2 + bx + c = 0$, that will take coefficients $a$, $b$, and $c$ as input and find the roots as output. Use nested if-else statement.}
 
 \subsection*{Solution:}
-A leap year is a year, occurring once every four years, which has 366 days including 29 February as an intercalary day.
-But then there is a catch: it cannot be a multiple of 100 because of some special rules that apply every 100 years.
-But if the year is a multiple of 400, it is a leap year.
+Roots of a quadratic equation $ax^2 + bx + c = 0$, where the constants $a, b, c\in\mathbb{R}$ and $a \ne 0$ is given by the
+following formula:
+\begin{displaymath}
+\frac{-b\pm\sqrt{b^2-4ac}}{2a}
+\end{displaymath}
+However, the nature of the roots are going to depend on the discriminant $b^2-4ac$. Here are the possible cases.
+\begin{itemize}
+    \item{If $b^2-4ac > 0$ then the roots of the quadratic equation $ax^2 +bx+ c = 0$ are real and unequal.}
+    \item{If $b^2-4ac = 0$ then the roots of the quadratic equation $ax^2 +bx+ c = 0$ are real and equal.}
+    \item{If $b^2-4ac < 0$ then the roots of the quadratic equation $ax^2 +bx+ c = 0$ are complex conjugate.}
+    \item{If $b^2-4ac > 0$ and is a perfect square then the roots of the quadratic equation $ax^2 +bx+ c = 0$ are rational and unequal}
+\end{itemize}
+Now that we know what the roots are going to be like before we ever solved the equation for them, we can compute the \emph{third case} from above a bit differently than the other three cases.
+
+If $b^2 - 4ac < 0$, then $-(b^2 - 4ac) = 4ac - b^2$ is a \emph{positive} quantity. Which will help us to resolve the formula into real and imaginary
+parts like the following.
+\begin{align*}
+x &= \frac{-b\pm\sqrt{b^2-4ac}}{2a}\\
+\Rightarrow x &= \frac{-b}{2a} \pm \frac{\sqrt{4ac - b^2}}{2a}i\\
+\end{align*}
+All we need to do now is translate this resolved formula into C and we are good to go!
 
 \begin{verbatim}
     /**
-     * Checks if a given year is a leap year or not.
+     * Finds the roots of a quadratic equation.
      */
 
 
     #include <stdio.h>
+    #include <math.h>
     #include <stdbool.h>
 
 
     int main(void)
     {
-        // Take input from user for a year.
-        int year;
-        printf("%s", "Enter a year: ");
-        scanf("%i", &year);
+        // Take user input for coefficients a, b, and c.
+        double a, b, c;
+        printf("%s", "a = ");
+        scanf("%lf", &a);
+        printf("%s", "b = ");
+        scanf("%lf", &b);
+        printf("%s", "c = ");
+        scanf("%lf", &c);
 
-        // Check if the year is a leap year or not.
-        bool leapYear;
-        if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))  
+        // Calculate
+        double discriminant = pow(b, 2) - 4 * a * c;
+        bool hasRealRoots = discriminant < 0 ? false : true;
+        double root1, root2;
+        double realPart, imginaryPart;
+        if (hasRealRoots)
         {
-            leapYear = true;
-        }
-        else 
-        {
-            leapYear = false;
-        }
-
-        // Show output.
-        if (leapYear)
-        {
-            printf("%i is a leap year.\n", year);
+            root1 = (-b + sqrt(discriminant)) / (2 * a);
+            root2 = (-b - sqrt(discriminant)) / (2 * a);
         }
         else
         {
-            printf("%i is not a leap year.\n", year);
+            realPart = -b / (2 * a);
+
+            // Discriminant, discriminant is negative here 
+            // as hasRealRoots boolean variable is evaluated
+            // false in the if clause. So, negating discriminant
+            // will return a non-negative argument for sqrt function.
+
+            // What we are actually doing is pulling out the 
+            // imaginary i off the expression so that we can just
+            // append it later when we will be showing output.
+            imginaryPart = sqrt(-discriminant) / (2 * a);
+        }
+
+        // Show output
+        printf("Roots are: \n");
+        if (hasRealRoots)
+        {
+            printf("%.2lf, %.2lf\n", root1, root2);
+        }
+        else
+        {
+            // As the roots are complex conjugate, we write the 
+            // real and imaginary parts separately which we
+            // calculated into two separate variables beforehand.
+            printf("%.2lf+%.2lf%c, %.2lf-%.2lf%c\n",
+             realPart, imginaryPart, 'i', realPart, imginaryPart, 'i' );
         }
     }
 
+
 \end{verbatim}
-Saving the file with name \texttt{leapyear.c}. Then compiling the source file with the following command:
+Saving the file with name \texttt{quadratic.c}. Then compiling the source file with the following command:
 \begin{verbatim}
-$ clang -o leapyear leapyear.c
+$ clang -o quadratic quadratic.c -lm
 \end{verbatim}
-An executable binary file with name \texttt{leapyear} will be created if everything goes right.
+An executable binary file with name \texttt{quadratic} will be created if everything goes right.
 
 \subsubsection*{Output}
-Running the executable in the following manner a few times:
+Running the executable using the following command:
 \begin{verbatim}
-$ ./leapyear
-Enter a year: 2019
-2019 is not a leap year.
-
-$ ./leapyear
-Enter a year: 2020
-2020 is a leap year.
-
-$ ./leapyear
-Enter a year: 2100
-2100 is not a leap year.
-
-$ ./leapyear
-Enter a year: 2000
-2000 is a leap year.
+$ ./quadratic
+a = 1
+b = 2
+c = 3
+Roots are: 
+-1.00+1.41i, -1.00-1.41i
 \end{verbatim}
+The output is as expected which is equal to $-1+\sqrt{2}i$ and $-1-\sqrt{2}i$ repectively, except our output is rounded to
+two decimal places.
 
 \section*{}
 NOTE: All the programs are written in \emph{Linux} environment. The executable binary files don't have an extension like .exe, .dmg, or .app beacuse in Linux whether a program is executable or not is determined by the permissions on the file, not the extension. And LLVM's \emph{Clang} is used for the compilation of above source files.
